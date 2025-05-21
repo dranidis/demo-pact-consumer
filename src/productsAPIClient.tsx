@@ -4,6 +4,8 @@ import { Product } from "./Models/Product";
 // API Client that will fetches prdoducts from the ProductsAPI
 // This is the target of our Pact test
 export class ProductsAPIClient {
+  // The constructor takes a URL to the API so that we can change it
+  // to the mock server URL used by Pact when we run the pact consumer tests
   constructor(private url: string) {}
 
   async getAllProducts  (): Promise<Product[]>  {
