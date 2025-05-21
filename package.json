@@ -21,7 +21,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test  --transformIgnorePatterns \"node_modules/(?!axios)/\"",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pactPublish": "pact-broker publish ./pacts --consumer-app-version=$(git rev-parse HEAD) --branch=$(git rev-parse --abbrev-ref HEAD) --broker-base-url=http://localhost:9292/ "
+  },
+  "config": {
+    "pact_do_not_track": true
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +47,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@pact-foundation/pact": "^12.1.0"
+    "@pact-foundation/pact": "^12.1.0",
+    "@pact-foundation/pact-cli": "^16.0.7"
   }
 }
