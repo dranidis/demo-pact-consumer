@@ -1,15 +1,18 @@
 # Pact consumer for the Pact presentation
 
 Execute pact tests:
+
 ```
-npm run test
+ENABLE_FEATURE_V4=true npm run test
 ```
 
 Publish pact to broker:
+
 ```
 pact-broker publish -r -b http://localhost:9292 ./pacts/ProductsUI-ProductsAPI.json
 ```
 
+**NOTE:** If branch is not provided by `git rev-parse --abbrev-ref HEAD` then you need to explicitly checkout the branch.
 
 # Getting Started with Create React App
 

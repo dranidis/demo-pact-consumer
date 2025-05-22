@@ -8,7 +8,7 @@ export class ProductsAPIClient {
   // to the mock server URL used by Pact when we run the pact consumer tests
   constructor(private url: string) {}
 
-  async getAllProducts  (): Promise<Product[]>  {
+  async getAllProducts(): Promise<Product[]> {
     const response = await axios.request({
       baseURL: this.url,
       headers: { Accept: "application/json" },
@@ -20,22 +20,17 @@ export class ProductsAPIClient {
     return response.data.map((product: any) => {
       return new Product(product.id, product.name);
     });
-  };
+  }
 
-  async  getProduct (id: string): Promise<Product>  {
-    const response =  
-    await axios.request({
+  async getProductById(id: number): Promise<Product> {
+    const response = await axios.request({
       baseURL: this.url,
       headers: { Accept: "application/json" },
       method: "GET",
-      url: `/products/${id}`,
+      url: `/products/${id.toString()}`,
     });
 
     // return the data from the response coverted to a Product
-    return new Product(
-      response.data.id,
-      response.data.name
-    );
-
-  };
+    return new Product(response.data.id, response.data.name);
+  }
 }

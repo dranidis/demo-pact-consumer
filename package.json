@@ -20,7 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test  --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+    "test": "rm ./pacts/* & react-scripts test  --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject",
     "pactPublish": "pact-broker publish ./pacts --consumer-app-version=$(git rev-parse HEAD) --branch=$(git rev-parse --abbrev-ref HEAD) --broker-base-url=http://localhost:9292/ "
   },
