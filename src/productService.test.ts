@@ -1,6 +1,7 @@
 import { PactV4, MatchersV3 } from "@pact-foundation/pact";
 import path from "path";
 import { ProductsAPIClient } from "./productsAPIClient";
+import { Product } from "./Models/Product";
 
 const provider = () =>
   new PactV4({
@@ -73,4 +74,36 @@ describe("GET /products", () => {
         expect(product.name).toEqual(productExample.name);
       });
   });
+
+  it("retuns an HTTP 200 when a product is created", () => {
+    // Arrange: Setup our expected interactions
+    //
+    // We use Pact to mock out the backend API
+    return provider()
+      .addInteraction()
+      .given("the product can be created")
+      .uponReceiving("a request to create a product")
+      .withRequest("POST", "/products", (builder) => {
+        builder.headers({ Accept: "application/json" });
+        builder.jsonBody({ name: productExample.name });
+      })
+      .willRespondWith(200, (builder_) => {
+        builder_.headers({ "Content-Type": "application/json" });
+        builder_.jsonBody(MatchersV3.like(productExample));
+      })
+      .executeTest(async (mockserver) => {
+        // Act: test our API client behaves correctly
+        //
+        // Note we configure the ProductsAPI client dynamically to
+        // point to the mock service Pact created for us, instead of
+        // the real one
+        productsAPIClient = new ProductsAPIClient(mockserver.url);
+        const product: Product = await productsAPIClient.createProduct({ name: productExample.name });
+
+        // Assert: check the result
+        expect(product.id).toBeGreaterThan(0);
+        expect(product.name).toEqual(productExample.name);
+      });
+  }
+  );
 });

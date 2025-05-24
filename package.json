@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test": "ENABLE_FEATURE_V4=true jest",
+    "test": "rm -f ./pacts/* & ENABLE_FEATURE_V4=true jest",
     "pactPublish": "pact-broker publish ./pacts --consumer-app-version=$(git rev-parse HEAD) --branch=$(git rev-parse --abbrev-ref HEAD) --broker-base-url=http://localhost:9292/ "
   },
   "config": {
