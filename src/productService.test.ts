@@ -75,7 +75,7 @@ describe("GET /products", () => {
       });
   });
 
-  it("retuns an HTTP 200 when a product is created", () => {
+  it("retuns an HTTP 201 when a product is created", () => {
     // Arrange: Setup our expected interactions
     //
     // We use Pact to mock out the backend API
@@ -87,7 +87,7 @@ describe("GET /products", () => {
         builder.headers({ Accept: "application/json" });
         builder.jsonBody({ name: productExample.name });
       })
-      .willRespondWith(200, (builder_) => {
+      .willRespondWith(201, (builder_) => {
         builder_.headers({ "Content-Type": "application/json" });
         builder_.jsonBody(MatchersV3.like(productExample));
       })
