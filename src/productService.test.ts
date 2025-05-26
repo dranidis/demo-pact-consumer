@@ -2,6 +2,7 @@ import { PactV4, MatchersV3 } from "@pact-foundation/pact";
 import path from "path";
 import { ProductsAPIClient } from "./productsAPIClient";
 import { Product } from "./Models/Product";
+import { like } from "@pact-foundation/pact/src/dsl/matchers";
 
 const provider = () =>
   new PactV4({
@@ -58,7 +59,10 @@ describe("GET /products", () => {
       })
       .willRespondWith(200, (builder_) => {
         builder_.headers({ "Content-Type": "application/json" });
-        builder_.jsonBody(MatchersV3.like(productExample));
+        builder_.jsonBody({
+          id: like(productExample.id),
+          name: productExample.name,
+        });
       })
       .executeTest(async (mockserver) => {
         // Act: test our API client behaves correctly
