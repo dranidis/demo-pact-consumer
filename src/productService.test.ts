@@ -59,10 +59,7 @@ describe("GET /products", () => {
       })
       .willRespondWith(200, (builder_) => {
         builder_.headers({ "Content-Type": "application/json" });
-        builder_.jsonBody({
-          id: like(productExample.id),
-          name: productExample.name,
-        });
+        builder_.jsonBody(MatchersV3.like(productExample));
       })
       .executeTest(async (mockserver) => {
         // Act: test our API client behaves correctly
@@ -93,7 +90,10 @@ describe("GET /products", () => {
       })
       .willRespondWith(201, (builder_) => {
         builder_.headers({ "Content-Type": "application/json" });
-        builder_.jsonBody(MatchersV3.like(productExample));
+        builder_.jsonBody({
+          id: like(productExample.id),
+          name: productExample.name,
+        });
       })
       .executeTest(async (mockserver) => {
         // Act: test our API client behaves correctly
